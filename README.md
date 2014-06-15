@@ -81,4 +81,29 @@ Lucky us, Elixir has [http://elixir-lang.org/docs/stable/elixir/OptionParser.htm
 for parsing CLI argument(s). We will use this module to create an awesome command line tools that
 will get an argument or two from user.
 
+First thing first, we will create command line tools that will say hello to name we given.
+
+Open up `lib/awesome_cli.ex` and add code below:
+
+    def main(args) do
+      args |> parse_args
+    end
+
+    def parse_args(args) do
+      {_, [ name ], _} = OptionParser.parse(args)
+
+      IO.puts "Hello, #{name}! You're awesome!!"
+    end
+
+We used `|>` operator to passing an argument to `parse_args` function. Then we used
+`OptionParser.parse` to parse the argument, take exactly one argument then print it out.
+Whe we run `mix escriptize` again then execute the app, we got something like this.
+
+    $> mix escriptize
+    $> ./awesome_cli ElixirLover
+    Hello, ElixirLover! You're awesome!!
+
+Awesome, right?! Ok, now to make our cli more awesome, let's implement help message to
+guide user how to use this tools.
+
 
