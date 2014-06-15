@@ -8,12 +8,36 @@ defmodule AwesomeCli do
   end
 
   def main(args) do
-    args |> parse_args
+    args |> parse_args |> do_process
   end
 
   def parse_args(args) do
-    {_, [ name ], _} = OptionParser.parse(args)
+    options = OptionParser.parse(args)
 
+    case options do
+      {[name: name], _, _} -> [name]
+      {[help: true], _, _} -> :help
+      _ -> :help
+
+    end
+  end
+
+  def do_process([name]) do
     IO.puts "Hello, #{name}! You're awesome!!"
+  end
+
+  def do_process(:help) do
+    IO.puts """
+      Usage: 
+      ./awesome_cli --name [your name]
+
+      Options:
+      --help  Show this help message.
+
+      Description:
+      Prints out an awesome message.
+    """
+
+    System.halt(0)
   end
  end
