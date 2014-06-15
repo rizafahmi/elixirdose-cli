@@ -8,6 +8,12 @@ defmodule AwesomeCli do
   end
 
   def main(args) do
-  	IO.puts "Hello, world!"
+    args |> parse_args
+  end
+
+  def parse_args(args) do
+    {_, [ name ], _} = OptionParser.parse(args)
+
+    IO.puts "Hello, #{name}! You're awesome!!"
   end
  end

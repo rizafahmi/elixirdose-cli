@@ -4,8 +4,8 @@ defmodule AwesomeCli.Mixfile do
   def project do
     [app: :awesome_cli,
      version: "0.0.1",
-     elixir: "~> 0.13.0",
-     escript_main_module: :awesome_cli,
+     elixir: "~> 0.14.0",
+     escript_main_module: AwesomeCli,
      deps: deps]
   end
 

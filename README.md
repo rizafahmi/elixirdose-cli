@@ -52,7 +52,7 @@ If you get error like: `** (Mix) Could not generate escript, please set :escript
         [app: :awesome_cli,
         version: "0.0.1",
         elixir: "~> 0.13.0",
-        escript_main_module: :awesome_cli,
+        escript_main_module: AwesomeCli,
         deps: deps]
       end
 
@@ -65,5 +65,20 @@ If you get error like: `** (Mix) Could not generate escript, please set :escript
         []
       end
     end
+
+Let's rerun `mix escriptize` and mix will compile our awesome_cli.ex file and
+generate a file `Elixir.AwesomeCli.beam` in the `_build/dev/lib/awesome_cli/ebin`
+directory as well as one executable file called `awesome_cli`. Let's execute the file.
+
+    $> ./awesome_cli
+    Hello, world!
+
+There you have it our first Elixir-powered executable application!
+
+## Parsing Argument(s)
+
+Lucky us, Elixir has [http://elixir-lang.org/docs/stable/elixir/OptionParser.html](OptionParser)
+for parsing CLI argument(s). We will use this module to create an awesome command line tools that
+will get an argument or two from user.
 
 
