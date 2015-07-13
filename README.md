@@ -1,6 +1,6 @@
 # Create Command Line Tools
 
-As software developers, we tend to depend on command line, especially me. Command line interface (CLI) are on fire this current time. Python, Ruby, Erlang and Elixir provide us with awesome tools on command line.  
+As software developers, we tend to depend on command line, especially me. Command line interface (CLI) are on fire this current time. Python, Ruby, Erlang and Elixir provide us with awesome tools on command line.
 
 So in this article we will attempt to creating a command line tools. And I have feeling that Elixir will do great in this area.
 
@@ -16,7 +16,7 @@ Open up `lib/awesome_cli.ex` and you’ll see something like this:
     defmodule AwesomeCli do
       use Application.Behaviour
 
-      # See http://elixir-lang.org/docs/stable/Application.Behaviour.html
+      # See http://elixir-lang.org/docs/stable/elixir/Application.html
       # for more information on OTP Applications
       def start(_type, _args) do
         AwesomeCli.Supervisor.start_link
@@ -28,7 +28,7 @@ Let's do me a favor to create hello world message in the project, will you?!
     defmodule AwesomeCli do
       use Application.Behaviour
 
-      # See http://elixir-lang.org/docs/stable/Application.Behaviour.html
+      # See http://elixir-lang.org/docs/stable/elixir/Application.html
       # for more information on OTP Applications
       def start(_type, _args) do
         AwesomeCli.Supervisor.start_link
@@ -39,11 +39,11 @@ Let's do me a favor to create hello world message in the project, will you?!
       end
     end
 
-Now run `mix escriptize` to make it executeable.
+Now run `mix escript.build` to make it executeable.
 
-    $> mix escriptize
+    $> mix escript.build
 
-If you get error like: `** (Mix) Could not generate escript, please set :escript_main_module in your project configuration to a module that implements main/1` that mean you run Elixir version 0.14. According to changelog, Elixir version 0.14 changelog, it now require `:escript_main_module` to be set before generating escripts. So let's do that by opening `mix.exs` file.
+If you get error like: `** (Mix) Could not generate escript, please set :escript in your project configuration to a function that returns the escript configuration for our application. So let's do that by opening `mix.exs` file.
 
     defmodule AwesomeCli.Mixfile do
       use Mix.Project
@@ -51,10 +51,15 @@ If you get error like: `** (Mix) Could not generate escript, please set :escript
       def project do
         [app: :awesome_cli,
         version: "0.0.1",
-        elixir: "~> 0.13.0",
-        escript_main_module: AwesomeCli,
+        elixir: "~> 1.0.4",
+        escript: escript,
         deps: deps]
       end
+
+      def escript do
+        [main_module: AwesomeCli]
+      end
+
 
       def application do
         [ applications: [],
@@ -66,7 +71,7 @@ If you get error like: `** (Mix) Could not generate escript, please set :escript
       end
     end
 
-Let's rerun `mix escriptize` and mix will compile our awesome_cli.ex file and
+Let's rerun `mix escript.build` and mix will compile our awesome_cli.ex file and
 generate a file `Elixir.AwesomeCli.beam` in the `_build/dev/lib/awesome_cli/ebin`
 directory as well as one executable file called `awesome_cli`. Let's execute the file.
 
@@ -98,9 +103,9 @@ Open up `lib/awesome_cli.ex` and add code below:
 
 We used `|>` operator to passing an argument to `parse_args` function. Then we used
 `OptionParser.parse` to parse the argument, take exactly one argument then print it out.
-Whe we run `mix escriptize` again then execute the app, we got something like this.
+Whe we run `mix escript.build` again then execute the app, we got something like this.
 
-    $> mix escriptize
+    $> mix escript.build
     $> ./awesome_cli --name ElixirFriend
     Hello, ElixirFriend! You're awesome!!
 
@@ -117,7 +122,7 @@ guide user how to use this tool. Let's use `case` syntax to and pattern matching
       end
     end
 
-Rerun `mix escriptize` again and execute it with `--help` option.
+Rerun `mix escript.build` again and execute it with `--help` option.
 
     $> ./awesome_cli --name ElixirFriend
     Hello, ElixirFriend! You're awesome!!
@@ -150,7 +155,7 @@ parsing arguments and return something to be used in another function.
 
     def do_process(:help) do
       IO.puts """
-        Usage: 
+        Usage:
         ./awesome_cli --name [your name]
 
         Options:
@@ -163,13 +168,13 @@ parsing arguments and return something to be used in another function.
       System.halt(0)
     end
 
-For the last time, rerun `mix escriptize` then try to execute it.
+For the last time, rerun `mix escript.build` then try to execute it.
 
-    $> mix escriptize
+    $> mix escript.build
     $> ./awesome_cli --name ElixirFriend
     Hello, ElixirFriend! You're awesome!!
     $> ./awesome_cli --help
-    Usage: 
+    Usage:
     ./awesome_cli --name [your name]
 
     Options:
@@ -178,7 +183,7 @@ For the last time, rerun `mix escriptize` then try to execute it.
     Description:
     Prints out an awesome message.
     $> ./awesome_cli
-    Usage: 
+    Usage:
     ./awesome_cli --name [your name]
 
     Options:
@@ -190,11 +195,10 @@ For the last time, rerun `mix escriptize` then try to execute it.
 ## Conclusion
 
 Today we are using Elixir's `OptionParser` for creating a simple command line tools.
-And with help from `mix escriptize` we able to generate the tools became executable.
+And with help from `mix escript.build` we able to generate the tools became executable.
 This example maybe simple enough but with this we can take conclusion that very easy and feel natural to create command line tools with Elixir.
 
 
 ## References
 
-* [How to create a command line utility with Elixir and mix](http://abstraction.killedthecat.net/create-command-line-utility-elixir-mix/)
 * [OptionParser Docs](http://elixir-lang.org/docs/stable/elixir/OptionParser.html)

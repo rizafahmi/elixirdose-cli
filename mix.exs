@@ -4,8 +4,8 @@ defmodule AwesomeCli.Mixfile do
   def project do
     [app: :awesome_cli,
      version: "0.0.1",
-     elixir: "~> 0.14.0",
-     escript_main_module: AwesomeCli,
+     elixir: "~> 1.0.4",
+     escript: escript,
      deps: deps]
   end
 
@@ -25,4 +25,13 @@ defmodule AwesomeCli.Mixfile do
   defp deps do
     []
   end
+
+  # Configuration for the escript build process
+  #
+  # Type `mix help escript.build` for more information
+  defp escript do
+    [ main_module: AwesomeCli,
+      embedd_elixir: true ]
+  end
+
 end

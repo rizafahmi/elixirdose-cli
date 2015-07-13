@@ -1,7 +1,7 @@
 defmodule AwesomeCli do
-  use Application.Behaviour
+  use Application
 
-  # See http://elixir-lang.org/docs/stable/Application.Behaviour.html
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
     AwesomeCli.Supervisor.start_link
@@ -28,7 +28,7 @@ defmodule AwesomeCli do
 
   def do_process(:help) do
     IO.puts """
-      Usage: 
+      Usage:
       ./awesome_cli --name [your name]
 
       Options:

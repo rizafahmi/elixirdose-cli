@@ -1,5 +1,5 @@
 defmodule AwesomeCli.Supervisor do
-  use Supervisor.Behaviour
+  use Supervisor
 
   def start_link do
     :supervisor.start_link(__MODULE__, [])
@@ -11,7 +11,7 @@ defmodule AwesomeCli.Supervisor do
       # worker(AwesomeCli.Worker, [arg1, arg2, arg3])
     ]
 
-    # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
+    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     supervise(children, strategy: :one_for_one)
   end
